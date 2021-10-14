@@ -1,4 +1,4 @@
-package com.example.demo
+package com.example.demo.exception
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 
 
 @ControllerAdvice
-internal class EmployeeNotFoundAdvice {
+internal class HttpException {
     @ResponseBody
     @ExceptionHandler(MissingRequestCookieException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

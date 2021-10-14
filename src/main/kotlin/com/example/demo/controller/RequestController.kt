@@ -1,5 +1,9 @@
-package com.example.demo
+package com.example.demo.controller
 
+import com.example.demo.entity.Feedback
+import com.example.demo.repository.FeedbackRepository
+import com.example.demo.entity.Request
+import com.example.demo.initDB.Load
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
@@ -7,28 +11,24 @@ import org.springframework.web.bind.annotation.*
 
 
 @RestController
-class RequestController {
-    private lateinit var repository: FeedbackRepository
-
-    private constructor(repository: FeedbackRepository) {
-        this.repository = repository
-    }
+@RequestMapping("/feedback")
+class RequestController private constructor(private var repository: FeedbackRepository) {
 
     companion object {
         private val log: Logger = LoggerFactory.getLogger(Load::class.java)
     }
 
-    @PostMapping("/feedback")
-    fun addFeedback(@CookieValue("user_id") user_id: String,
+    @PostMapping
+    private fun addFeedback(@CookieValue("user_id") user_id: String,
                     @RequestBody newRequest: Request): ResponseEntity<Request> {
         log.info("Post")
-        if (newRequest.getMethod() == "add_feedback"){
-            addFeedback(user_id, newRequest.getParams())
+        if (newRequest.method == "add_feedback"){
+            addFeedback(user_id, newRequest.params)
         }
         return ResponseEntity.ok(newRequest)
     }
 
-    @GetMapping("/feedback")
+    @GetMapping
     private fun getAllFeedback(@CookieValue("user_id") user_id: String): List<Feedback?> {
         return repository.findAll()
     }

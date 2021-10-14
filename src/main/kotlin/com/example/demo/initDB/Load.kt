@@ -1,5 +1,7 @@
-package com.example.demo
+package com.example.demo.initDB
 
+import com.example.demo.entity.Feedback
+import com.example.demo.repository.FeedbackRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
